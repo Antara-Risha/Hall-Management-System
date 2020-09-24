@@ -21,12 +21,11 @@
 <div class="sign-in-form">
 <img src="usericon.png">
 <h1>Sign In</h1>
-<form method="POST" >
+<form method="get">
 <input type="student_id" class="input-box" name="student_id" placeholder="your Student_Id" required >
 <input type="password" class="input-box" name="password" placeholder="your password" required >
 <input type="radio"class="check-box" name="check-box"><span> Forget password </span>
-<button type="Submit" class="signIn-btn">
-	<a href="http://localhost/main.html" class=button>sign In </a>
+<button type="Submit" class="signIn-btn" a href="file:///C:/xampp/htdocs/index2.html" >sign In
 </button>
 <hr>
 <p
@@ -46,18 +45,57 @@
 <input type="radio" id="staff" class="check-box" name="Select User" value="staff">Staff
 <label for="staff"></label><br>
 <input type="radio" id="student" class="check-box" name="Select User" value="student">Student
-<button>
- <a class=button href="http://localhost/index2.html"  >Submit </a></button>
 <label for="student"></label><br>
+ <a href="http://localhost/index2.html" class=button >Submit </a></button>
 
+<script src="https://code.jquery.com/jquery-3.4.1.min.j"></script>
+<?php
+
+$StudentID = filter_input(INPUT_GET,'student_id');
+$password = filter_input(INPUT_GET,'password');
+
+ if( !empty($StudentID)){
+if( !empty($password)){
+$host = "localhost";
+$dbusername = "root";
+$dbpassword = "";
+$dbname = "dormido";
+
+$conn = new mysqli ($host,$dbusername,$dbpassword,$dbname);
+
+if(mysqli_connect_error()){
+die("Connect Error".mysqli_connect_error() );
+}
+else{
+	echo "connect successfully";
+$sql = "INSERT INTO logging2 (student_id,password) values ('$StudentID','$password')";
+if($conn->query($sql)){
+echo "logged In successfully.";
+}
+ else{
+echo "Error: ".$sql."<br>".$conn->error;
+}
+$conn->close();
+}
+} 
+else{
+      echo "Password should not be empty." ;
+       die();
+}
+  }
+else{
+    echo "StudentID shouldnot be empty." ;
+    die();
+}
+  
+?>
 </form>
 </div>
 
 
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.min.j"></script>
 
 
 
 </body>
-</html>
+</html> 
